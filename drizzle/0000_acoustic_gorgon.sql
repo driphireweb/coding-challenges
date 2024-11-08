@@ -14,6 +14,5 @@ CREATE INDEX IF NOT EXISTS "advocates_search_idx" ON "advocates" USING btree (to
       coalesce("first_name", '') || ' ' ||
       coalesce("last_name", '') || ' ' ||
       coalesce("city", '') || ' ' ||
-      coalesce("degree", '') || ' ' ||
-      coalesce(array_to_string("payload"::text[], ' ', ''),'')
+      coalesce("degree", '')
     ));

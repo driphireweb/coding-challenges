@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,json,md}\"",
     "generate": "drizzle-kit generate",
-    "migrate:up": "node ./src/db/migrate.js",
+    "migrate:up": "tsx ./src/db/migrate.ts",
     "seed": "node dist/db/seed/advocates.js",
     "start": "node dist/server.js"
   },
@@ -39,6 +39,7 @@
     "@typescript-eslint/parser": "^8.13.0",
     "babel-plugin-module-resolver": "^5.0.2",
     "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.28.0",
     "esbuild-register": "^3.5.0",
     "eslint": "^8.57.0",
@@ -48,6 +49,8 @@
     "postcss": "^8.4.40",
     "rimraf": "^5.0.5",
     "tailwindcss": "^3.4.7",
+    "tsx": "^4.19.2",
     "typescript": "^5.5.4"
-  }
+  },
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }

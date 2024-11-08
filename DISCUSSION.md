@@ -6,8 +6,23 @@
 - Added full-text search using PostgreSQL's GIN index
 - Implemented proper search term formatting for tsquery
 - Added database seeding functionality with sample data
+- Fixed database connection issues by correcting password configuration
+- Improved migration reliability with proper service dependencies
 
-## 2. UI/UX Improvements
+## 2. Docker Infrastructure Improvements
+- Added curl installation to Docker container for API requests
+- Implemented proper service dependency chain (db -> web -> migrations)
+- Added health checks for database connectivity
+- Implemented wait mechanism for web service before seeding
+- Fixed database URL configuration across services
+- Improved container build process with proper cleanup
+- **Simplified developer setup with single `docker-compose up` command**
+  - Automated database creation
+  - Automated schema migrations
+  - Automated data seeding
+  - No manual setup steps required
+
+## 3. UI/UX Improvements
 - Added responsive table layout with proper loading states
 - Implemented custom specialty badges with color mapping
 - Created hover-based specialty popover for overflow items
@@ -15,18 +30,25 @@
 - Implemented debounced search with loading indicators
 - Added search reset functionality
 
-## 3. Performance Optimizations
+## 4. Performance Optimizations
 - Memoized component functions using useCallback and useMemo
 - Implemented proper loading states during API calls
 - Added debounced search to reduce API requests
 - Optimized database queries with proper indexing
 - Added client-side caching of initial advocate data
 
-## 4. Type Safety
+## 5. Type Safety
 - Added TypeScript interfaces for Advocate type
 - Implemented proper type checking throughout components
 - Added proper error handling types
 - Implemented proper API response types
+
+## 6. Developer Experience
+- Streamlined setup process from multiple commands to single command
+- Eliminated manual database creation step
+- Removed need for separate migration command
+- Automated seeding process
+- Updated documentation to reflect simplified setup
 
 ## Recent Improvements Made
 1. Enhanced Search Functionality

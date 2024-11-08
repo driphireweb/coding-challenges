@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     .map(term => `${term}:*`)
     .join(' & ')
 
-  const data = await db
+  const data = (await db
     .select()
     .from(advocates)
     .where(
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
         coalesce(${advocates.city}, '') || ' ' ||
         coalesce(${advocates.degree}, '')
       ) @@ to_tsquery('english', ${formattedSearch})`
-    )
+    ))as any
 
   return Response.json({ data })
 }

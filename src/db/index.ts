@@ -6,14 +6,16 @@ const setup = () => {
     console.error('DATABASE_URL is not set')
     return {
       select: () => ({
-        from: () => [],
+        from: () => ({
+          where: () => [],
+        }),
       }),
       insert: () => ({
         values: () => ({
           returning: () => [],
         }),
       }),
-    }
+    } as any
   }
 
   const queryClient = postgres(process.env.DATABASE_URL)
