@@ -125,6 +125,7 @@
 ## Next Steps
 
 ### Build & Deployment Preparation
+- Allow for dev environment/prod build
 - Focus on build configuration for Next.js application
 - Set up GitHub Actions for CI/CD
   - Automated testing
