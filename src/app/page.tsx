@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
 import {
@@ -40,6 +40,10 @@ export default function Home() {
     y: number
   } | null>(null)
 
+  // Add a debounce timeout ref
+  const searchTimeout = useRef<NodeJS.Timeout>()
+  const isInitialLoad = useRef(true)
+
   // Memoize the fetch function
   const fetchAdvocates = useCallback(async (search?: string) => {
     setIsLoading(true)
@@ -50,8 +54,6 @@ export default function Home() {
 
       const response = await fetch(url)
       const { data } = await response.json()
-
-      await new Promise(resolve => setTimeout(resolve, 300))
 
       if (!search) {
         setAdvocates(data)
@@ -67,8 +69,12 @@ export default function Home() {
     }
   }, [])
 
+  // Initial data load
   useEffect(() => {
-    fetchAdvocates()
+    if (isInitialLoad.current) {
+      fetchAdvocates()
+      isInitialLoad.current = false
+    }
   }, [fetchAdvocates])
 
   // Memoize the reset function
@@ -97,11 +103,15 @@ export default function Home() {
     [searchTerm, handleReset]
   )
 
-  // Update the debounced onChange handler to prevent flickering
+  // Update the debounced onChange handler
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
       setSearchTerm(value)
+
+      if (searchTimeout.current) {
+        clearTimeout(searchTimeout.current)
+      }
 
       if (!value.trim()) {
         setFilteredAdvocates(advocates)
@@ -110,14 +120,22 @@ export default function Home() {
       }
 
       setIsSearching(true)
-      const timeoutId = setTimeout(() => {
+      
+      searchTimeout.current = setTimeout(() => {
         fetchAdvocates(value)
       }, 500)
-
-      return () => clearTimeout(timeoutId)
     },
     [fetchAdvocates, advocates]
   )
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (searchTimeout.current) {
+        clearTimeout(searchTimeout.current)
+      }
+    }
+  }, [])
 
   // Memoize the loading state UI
   const LoadingSkeleton = useMemo(
